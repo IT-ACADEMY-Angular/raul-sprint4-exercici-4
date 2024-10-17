@@ -1,0 +1,40 @@
+.container {
+    border-radius: 15px;
+    background-color: white;
+
+}
+
+.text-joke-button {
+    color: white !important;
+    font-weight: bold !important;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(/img/jump.avif);
+}
+
+#jokePrint {
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: large;
+    font-weight: bolder;
+    color: rgb(109, 103, 103);
+}
+
+.weather-box {
+    font-weight: bolder;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
