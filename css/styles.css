@@ -48,3 +48,17 @@ body {
 .score-button {
     font-size: 2rem;
 }
+
+.weather-icon{
+    width: 50px;
+    height: 50px;
+}
+
+.vertical-bar {
+    display: inline-block;
+    width: 2px;
+    height: 30px;
+    background-color: black;
+    margin: 0 10px;
+    vertical-align: middle;
+}
