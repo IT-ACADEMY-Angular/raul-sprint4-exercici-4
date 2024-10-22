@@ -11,17 +11,30 @@ let currentJoke = '';
 let currentScore: number | null = null;
 
 async function searchJoke() {
+
+    const randomAPI = Math.random() < 0.5 ? 'icanhazdadjoke' : 'chucknorris'; //reandom a 50%
+
     try {
-        const response = await fetch('https://icanhazdadjoke.com/', {
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-        const data = await response.json();
-        currentJoke = data.joke;
+        let joke = '';
+        if (randomAPI === 'icanhazdadjoke') {
+            //API Dad jokes
+            // console.log('Chiste de DAD JOKES <--');
+            const response = await fetch('https://icanhazdadjoke.com/', { headers: { 'Accept': 'application/json' } });
+            const data = await response.json();
+            joke = data.joke;
+        } else {
+            //API Chuck norris
+            // console.log('Chiste de CHUCK NORRIS <--');
+            const response = await fetch('https://api.chucknorris.io/jokes/random');
+            const data = await response.json();
+            joke = data.value;
+        }
+        currentJoke = joke;
         jokeDisplay.innerText = currentJoke; // se actualiza el elemento para que aparezca ahí el chiste, por eso no me aparecia, IMPORTANT!!! <<<
+
         currentScore = null;
         resetButtonStyles();
+        
     } catch {
         jokeDisplay.innerText = '¡Hay algún error con la API de chistes, inténtalo más tarde!';
     }
@@ -30,8 +43,7 @@ async function searchJoke() {
 async function displayWeather() {
     // const apiKey = 'ec3cba1ca67945b3b66bd2f80f14b3a6'; //Gratis para siempre pero con 50req/day
     const apiKey = 'cc36d53f17ff42b4a2a11917a0992e9b'; //Gratis 21 dias pero con 1500req/day
-    // const city = 'Barcelona';
-    const city = 'Bangkok';
+    const city = 'barcelona';
     const apiUrl = `https://api.weatherbit.io/v2.0/current?city=${city}&key=${apiKey}&lang=es`;
 
     try {
