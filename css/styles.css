@@ -19,6 +19,8 @@ body {
     height: 100%;
     position: relative;
     background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(/img/jump.avif);
+    background-size: cover;
+    background-position: center;
 }
 
 #jokePrint {
@@ -37,4 +39,12 @@ body {
     left: 30px;
     border-radius: 5px;
     padding: 5px 10px;
+}
+
+.selected {
+    transform: scale(1.4);
+}
+
+.score-button {
+    font-size: 2rem;
 }
