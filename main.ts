@@ -41,30 +41,29 @@ async function searchJoke() {
 }
 
 async function displayWeather() {
-    // const apiKey = 'ec3cba1ca67945b3b66bd2f80f14b3a6'; //Gratis para siempre pero con 50req/day
-    const apiKey = 'cc36d53f17ff42b4a2a11917a0992e9b'; //Gratis 21 dias pero con 1500req/day
-    const city = 'barcelona';
-    const apiUrl = `https://api.weatherbit.io/v2.0/current?city=${city}&key=${apiKey}&lang=es`;
+    const apiKey = 'e06a7fd14a5545cc8f784046242310'; //Gratis 2 semanas trial, despues free para siempre, otra API con mejores iconos 5Mreq/month
+    const city = 'Badalona';
+    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&lang=es`;
 
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
 
-        const weather = data.data[0];
-        const temperature = weather.temp;
-        const iconCode = weather.weather.icon;
+        const weather = data.current;
+        const temperature = weather.temp_c;
+        const iconUrl = `https:${weather.condition.icon}`;
 
-        weatherBox.innerHTML = `<img src="https://www.weatherbit.io/static/img/icons/${iconCode}.png" class="weather-icon"> <span class="vertical-bar"></span> ${temperature} ºC`;
-
+        weatherBox.innerHTML = ` <img src="${iconUrl}" class="weather-icon"> <span class="vertical-bar"></span> ${temperature} ºC `;
     } catch {
         weatherBox.innerText = '¡Hay algún error con la API del tiempo, inténtalo más tarde!';
     }
 }
 
+
 function saveJokeReport() {
     if (currentJoke) {
         reportJoke.push({ joke: currentJoke, score: currentScore, date: new Date().toISOString() });
-        console.table(reportJoke);
+        // console.table(reportJoke);
     }
 }
 
