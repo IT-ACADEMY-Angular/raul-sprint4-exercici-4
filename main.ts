@@ -1,12 +1,33 @@
-// los "as HTML..." es para que el compilñador sepa que es cada elemento
 const getJokeButton = document.getElementById('getJoke') as HTMLButtonElement;
 const jokeDisplay = document.getElementById('jokePrint') as HTMLParagraphElement;
 const scoreButtons = document.querySelectorAll('.score-button') as NodeListOf<HTMLButtonElement>;
 const weatherBox = document.getElementById('weather-box') as HTMLParagraphElement;
 
+const totalBackgrounds = 7;
+let availableBackgrounds: number[] = [...Array(totalBackgrounds).keys()].map(i => i + 1);
+let lastBackgroundIndex: number | null = null;
+
+//funcion cambiada para que aplique los cambios al contenedor del HTML (.background-container), 
+//porque antes la otra función eliminaba todo tipo de elemento del background, ahora puedo tener Background + Blob por separado <---
+function changeBackground(): void {
+
+    if (availableBackgrounds.length === 0) {
+        availableBackgrounds = [...Array(totalBackgrounds).keys()].map(i => i + 1);
+    }
+
+    const randomIndex = Math.floor(Math.random() * availableBackgrounds.length);
+    const selectedBackground = availableBackgrounds[randomIndex];
+    availableBackgrounds.splice(randomIndex, 1);
+    const backgroundContainer = document.getElementById('background-container');
+
+    if (backgroundContainer) {
+        backgroundContainer.className = '';
+
+        backgroundContainer.classList.add(`background-${selectedBackground}`);
+    }
+}
 
 let reportJoke: { joke: string, score: number | null, date: string }[] = [];
-
 let currentJoke = '';
 let currentScore: number | null = null;
 
@@ -23,17 +44,19 @@ async function searchJoke() {
             const data = await response.json();
             joke = data.joke;
         } else {
-            //API Chuck norris
+            //API Chuck norris jokes
             // console.log('Chiste de CHUCK NORRIS <--');
             const response = await fetch('https://api.chucknorris.io/jokes/random');
             const data = await response.json();
             joke = data.value;
         }
         currentJoke = joke;
-        jokeDisplay.innerText = currentJoke; // se actualiza el elemento para que aparezca ahí el chiste, por eso no me aparecia, IMPORTANT!!! <<<
+        jokeDisplay.innerText = currentJoke;
 
         currentScore = null;
         resetButtonStyles();
+
+        changeBackground();
         
     } catch {
         jokeDisplay.innerText = '¡Hay algún error con la API de chistes, inténtalo más tarde!';
@@ -41,25 +64,22 @@ async function searchJoke() {
 }
 
 async function displayWeather() {
-    // const apiKey = 'ec3cba1ca67945b3b66bd2f80f14b3a6'; //Gratis para siempre pero con 50req/day
-    const apiKey = 'cc36d53f17ff42b4a2a11917a0992e9b'; //Gratis 21 dias pero con 1500req/day
-    const city = 'barcelona';
-    const apiUrl = `https://api.weatherbit.io/v2.0/current?city=${city}&key=${apiKey}&lang=es`;
+    const apiKey = 'e06a7fd14a5545cc8f784046242310'; //Gratis 2 semanas trial, despues del trial, es gratis para siempre, otra API con mejores iconos 5Mreq/month
+    const city = 'Badalona';
+    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&lang=es`;
 
     try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-
-        const weather = data.data[0];
-        const temperature = weather.temp;
-        const iconCode = weather.weather.icon;
-
-        weatherBox.innerHTML = `<img src="https://www.weatherbit.io/static/img/icons/${iconCode}.png" class="weather-icon"> <span class="vertical-bar"></span> ${temperature} ºC`;
-
+        const weather = data.current;
+        const temperature = weather.temp_c;
+        const iconUrl = `https:${weather.condition.icon}`;
+        weatherBox.innerHTML = ` <img src="${iconUrl}" class="weather-icon"> <span class="vertical-bar"></span> <span class="temperature-halloween">${temperature} ºC</span>`;
     } catch {
         weatherBox.innerText = '¡Hay algún error con la API del tiempo, inténtalo más tarde!';
     }
 }
+
 
 function saveJokeReport() {
     if (currentJoke) {
