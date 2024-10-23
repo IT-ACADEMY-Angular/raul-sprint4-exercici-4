@@ -1,4 +1,4 @@
-# Sprint 3 IT Academy | Testing
+# Sprint 4 IT Academy | Typescript
 
 ## 📄 Descripción
 
@@ -37,15 +37,19 @@ $ npm install
 $ npm run dev
 ```
 
-## 💻 Tecnologías Utilizadas
+## 💻 Tecnologías y Recursos Utilizados
 
 - TYPESCRIPT
 - HTML
 - CSS
 - PARCEL como BUNDLER
 - WAIT-ON y OPN para abrir el localhost automaticamente
+- Blob generator
+- SVGRepo logos SVG
+- FREEPIK imagenes SVG
 
 ## ✨ Características
 
 - Cada ejercicio está en un commit
-- (WORKING ON IT... lo actualizo cuando acabe jeje)
+- Ya que se acerca Halloween, hice el diseño para la ocasión.
+- He utilizado 3 APIS. 2 para chistes y 1 para el tiempo.
