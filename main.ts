@@ -84,7 +84,7 @@ async function displayWeather() {
 function saveJokeReport() {
     if (currentJoke) {
         reportJoke.push({ joke: currentJoke, score: currentScore, date: new Date().toISOString() });
-        console.table(reportJoke);
+        // console.table(reportJoke);
     }
 }
 
